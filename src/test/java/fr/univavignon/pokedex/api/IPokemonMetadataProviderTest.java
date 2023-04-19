@@ -30,17 +30,23 @@ public class IPokemonMetadataProviderTest {
         Mockito.when(mockedProvider.getPokemonMetadata(133)).thenReturn(pokemonsMetadata.get(133));
     }
 
-    @Test(expected=PokedexException.class)
-    public void testPokemonNotFoundException() throws PokedexException {
+    @Test
+    public void testPokemonNotFoundException(){
         for(Integer index : errors){
-            mockedProvider.getPokemonMetadata(index);
+            Assert.assertThrows(PokedexException.class, () -> {
+                mockedProvider.getPokemonMetadata(index);
+            });
         }
     }
 
     @Test
     public void testPokemonFound() throws PokedexException {
         for(PokemonMetadata pokemonMetadata : pokemonsMetadata.values()){
-            Assert.assertEquals(mockedProvider.getPokemonMetadata(pokemonMetadata.getIndex()), pokemonMetadata);
+            Assert.assertEquals(mockedProvider.getPokemonMetadata(pokemonMetadata.getIndex()).getIndex(), pokemonMetadata.getIndex());
+            Assert.assertEquals(mockedProvider.getPokemonMetadata(pokemonMetadata.getIndex()).getName(), pokemonMetadata.getName());
+            Assert.assertEquals(mockedProvider.getPokemonMetadata(pokemonMetadata.getIndex()).getAttack(), pokemonMetadata.getAttack());
+            Assert.assertEquals(mockedProvider.getPokemonMetadata(pokemonMetadata.getIndex()).getDefense(), pokemonMetadata.getDefense());
+            Assert.assertEquals(mockedProvider.getPokemonMetadata(pokemonMetadata.getIndex()).getStamina(), pokemonMetadata.getStamina());
         }
     }
 }
