@@ -26,6 +26,9 @@ jobs:
       - run:
           name: Test
           command: mvn test
+      - store_artifacts:
+          path: target/site/jacoco/jacoco.xml
+          destination: /tmp/artifacts
       - codecov/upload
 
 # Invoke jobs via workflows
