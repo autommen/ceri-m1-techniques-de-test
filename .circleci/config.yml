@@ -61,7 +61,7 @@ jobs:
       - checkout
       - run:
           name: Checkstyle
-          command: mvn check:checkstyle
+          command: mvn checkstyle:checkstyle
       - store_artifacts:
           path: target/checkstyle-result.xml
           destination: /tmp/artifacts
