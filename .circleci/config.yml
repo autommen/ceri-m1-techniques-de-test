@@ -104,12 +104,13 @@ jobs:
             npm install -g --silent gh-pages@3.0
             git config user.email "ci-build@klukas.net"
             git config user.name "ci-build"
-      - run:
-          name: Deploy docs to gh-pages branch
-          command: gh-pages --message "[skip ci] Updates" --dist target/site/apidocs
       - add_ssh_keys:
           fingerprints:
             - "75:b3:8b:99:07:a5:38:1a:51:3f:c5:b2:1d:3d:89:5e"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --message "[skip ci] Updates" --dist target/site/apidocs
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 orbs:
