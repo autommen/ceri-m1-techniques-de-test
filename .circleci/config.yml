@@ -62,11 +62,28 @@ jobs:
       - run:
           name: Checkstyle
           command: mvn checkstyle:checkstyle
+      - run:
+          name: Checkstyle
+          command: mvn badger:badges
       - store_artifacts:
-          path: target/checkstyle-result.xml
+          path: target/site/badges/checkstyle-result.svg
           destination: /tmp/artifacts
       # Use mvn clean and package as the standard maven build phase
-
+  upload-javadoc:
+    # These next lines define a Docker executor: https://circleci.com/docs/2.0/executor-types/
+    # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # Be sure to update the Docker image tag below to openjdk version of your application.
+    # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/openjdk
+    docker:
+      - image: cimg/openjdk:19.0
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      # Checkout the code as the first step.
+      - checkout
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --dist target/site/apidocs/
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 orbs:
@@ -90,5 +107,9 @@ workflows:
           branches:
             only:
               - master
-
+      - upload-javadoc:
+        filters:
+          branches:
+            only:
+              - master
       
