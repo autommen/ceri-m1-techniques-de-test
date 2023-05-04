@@ -85,8 +85,8 @@ jobs:
           name: Build javadoc
           command: mvn javadoc:javadoc
       - persist_to_workspace:
-          root: target
-          paths: site/apidocs
+          root: target/site
+          paths: apidocs
   upload-javadoc:
     # These next lines define a Docker executor: https://circleci.com/docs/2.0/executor-types/
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -97,7 +97,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: target
+          at: target/site
       - run:
           name: Install and configure dependencies
           command: |
