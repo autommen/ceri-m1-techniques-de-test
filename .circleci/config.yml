@@ -82,8 +82,8 @@ jobs:
       # Checkout the code as the first step.
       - checkout
       - run:
-            name: Build javadoc
-            command: mvn site
+          name: Build javadoc
+          command: mvn site
       - persist_to_workspace:
           root: docs/_build
           paths: target/site/apidocs
@@ -116,30 +116,31 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test:
-        filters:
+          filters:
             branches:
               only:
                 - master
       - codecov-upload:
-        filters:
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - master
       - codestyle-check:
-        filters:
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - master
+  docs:
+    jobs:
       - build-javadoc:
-        filters:
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - master
       - upload-javadoc:
-        requires:
-          - build-javadoc
-        filters:
-          branches:
-            only:
-              - master
-      
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build-javadoc
