@@ -83,7 +83,7 @@ jobs:
       - checkout
       - run:
           name: Build javadoc
-          command: mvn site
+          command: mvn javadoc:javadoc
       - persist_to_workspace:
           root: docs/_build
           paths: target/site/apidocs
