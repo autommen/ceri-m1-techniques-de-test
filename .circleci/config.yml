@@ -130,6 +130,11 @@ workflows:
           branches:
             only:
               - master
+      - build-javadoc:
+        filters:
+          branches:
+            only:
+              - master
       - upload-javadoc:
         requires:
           - build-javadoc
